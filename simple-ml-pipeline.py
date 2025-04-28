@@ -9,6 +9,9 @@ from airflow.decorators import dag, task
 
 
 @dag(dag_id='simple_ml_pipeline', start_date=datetime(2024, 4, 4), schedule_interval=None,catchup=False)
+## Sample DAG using python virtual env operator
+## Important to note that virtual env doesnt support xcom push and pull
+## https://airflow.apache.org/docs/apache-airflow-providers-standard/stable/operators/python.html#id1
 def bitcoin_model():
     @task.virtualenv(
     task_id="fetch_data", requirements=["scikit-learn", "pandas"], system_site_packages=False
