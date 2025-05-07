@@ -19,6 +19,10 @@ def bitcoin_model():
     task_id="fetch_data", requirements=["scikit-learn", "pandas"], system_site_packages=False
     )
     def fetch_data_task():
+        import sys
+        CUSTOM_LIB_PATH = "./src"
+        sys.path.insert(0, CUSTOM_LIB_PATH)
+        from utils import fetch_data 
         return fetch_data()
     
     @task.virtualenv(
