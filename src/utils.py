@@ -12,9 +12,6 @@ def fetch_data():
     import pandas as pd
     from sklearn.datasets import load_iris
 
-    # from src.utils import sample_utility_function
-    # print(sample_utility_function())
-
     BASE_DIR = "/tmp/airflow_iris"
 
     os.makedirs(BASE_DIR, exist_ok=True)
@@ -25,8 +22,6 @@ def fetch_data():
     data_path = os.path.join(BASE_DIR, "iris_data.csv")
     df.to_csv(data_path, index=False)
 
-    # ti.xcom_push(key='data_path', value=data_path)
-    # return {"data_path": data_path}
     return data_path
 
 
@@ -36,7 +31,7 @@ def preprocess_data(data_path):
     import pandas as pd
     from sklearn.preprocessing import StandardScaler
     from sklearn.model_selection import train_test_split
-    # data_path = ti.xcom_pull(task_ids='fetch_data')['data_path']
+    
     print(data_path)
     df = pd.read_csv(data_path)
 
@@ -57,6 +52,5 @@ def preprocess_data(data_path):
     with open(processed_path, 'wb') as f:
         pickle.dump((X_train, X_test, y_train, y_test), f)
 
-    # ti.xcom_push(key='processed_path', value=processed_path)
 
     return {"processed_path": processed_path}

@@ -1,13 +1,9 @@
-from airflow import DAG
-from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
+
 from datetime import datetime
 
 import os
 from airflow.decorators import task
 from airflow.decorators import dag, task
-
-# from src.utils import sample_utility_function, fetch_data, preprocess_data
-
 
 
 @dag(dag_id='simple_ml_pipeline', start_date=datetime(2024, 4, 4), schedule_interval=None,catchup=False)
