@@ -12,8 +12,8 @@ def fetch_data():
     import pandas as pd
     from sklearn.datasets import load_iris
 
-    from src.utils import sample_utility_function
-    print(sample_utility_function())
+    # from src.utils import sample_utility_function
+    # print(sample_utility_function())
 
     BASE_DIR = "/tmp/airflow_iris"
 
