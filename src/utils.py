@@ -1,4 +1,6 @@
 
+import pandas as pd
+
 def sample_utility_function():
     """
     This is a sample utility function.
@@ -40,17 +42,31 @@ def preprocess_data(data_path):
     X = df.drop('target', axis=1)
     y = df['target']
 
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # scaler = StandardScaler()
+    # X_scaled = scaler.fit_transform(X)
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_scaled, y, test_size=0.2, random_state=42
+    x_scaled = log_transform_data(X)
+
+    x_train, x_test, y_train, y_test = train_test_split(
+        x_scaled, y, test_size=0.2, random_state=42
     )
 
     BASE_DIR = "/tmp/airflow_iris"
     processed_path = os.path.join(BASE_DIR, "processed.pkl")
     with open(processed_path, 'wb') as f:
-        pickle.dump((X_train, X_test, y_train, y_test), f)
+        pickle.dump((x_train, x_test, y_train, y_test), f)
 
 
     return {"processed_path": processed_path}
+
+
+def log_transform_data(df: pd.DataFrame) -> pd.DataFrame:
+
+    import pandas as pd
+    import numpy as np
+
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"Expected input of type 'pandas.DataFrame', but got {type(df).__name__}.")
+
+    log_df = np.log1p(df)
+    return log_df
